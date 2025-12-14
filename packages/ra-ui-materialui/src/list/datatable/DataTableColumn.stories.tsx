@@ -14,6 +14,8 @@ import { List } from '../List';
 import { AdminContext } from '../../AdminContext';
 import { TextField, NumberField } from '../../field';
 import { DataTable } from './DataTable';
+import { TopToolbar } from '../../layout';
+import { ColumnsButton } from './ColumnsButton';
 
 export default { title: 'ra-ui-materialui/list/DataTable.Col' };
 
@@ -68,7 +70,12 @@ const dataProvider = fakeRestDataProvider(data);
 
 const theme = createTheme();
 
-const Wrapper = ({ children }) => (
+type WrapperProps = {
+    children: React.ReactNode;
+    actions?: React.ReactElement | false;
+};
+
+const Wrapper = ({ children, actions = false }: WrapperProps) => (
     <TestMemoryRouter initialEntries={['/books']}>
         <AdminContext
             dataProvider={dataProvider}
@@ -78,7 +85,7 @@ const Wrapper = ({ children }) => (
             <Resource
                 name="books"
                 list={() => (
-                    <List sx={{ p: 4 }} actions={false} pagination={false}>
+                    <List sx={{ p: 4 }} actions={actions} pagination={false}>
                         {children}
                     </List>
                 )}
@@ -328,3 +335,21 @@ export const CellSx = () => (
         </DataTable>
     </Wrapper>
 );
+
+export const HideInColumnsButton = () => {
+    const Actions = () => (
+        <TopToolbar>
+            <ColumnsButton />
+        </TopToolbar>
+    );
+    return (
+        <Wrapper actions={<Actions />}>
+            <DataTable>
+                <DataTable.Col source="id" hideInColumnsButton={true} />
+                <DataTable.Col source="title" />
+                <DataTable.Col source="author" />
+                <DataTable.Col source="year" />
+            </DataTable>
+        </Wrapper>
+    );
+};

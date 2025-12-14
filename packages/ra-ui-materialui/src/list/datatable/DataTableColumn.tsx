@@ -27,6 +27,7 @@ export interface DataTableColumnProps<
     label?: React.ReactNode;
     disableSort?: boolean;
     sortByOrder?: SortPayload['order'];
+    hideInColumnsButton?: boolean;
 }
 
 const DataTableColumnImpl = React.forwardRef<
@@ -36,7 +37,9 @@ const DataTableColumnImpl = React.forwardRef<
     const renderContext = useDataTableRenderContext();
     switch (renderContext) {
         case 'columnsSelector':
-            return <ColumnsSelectorItem {...props} />;
+            return props.hideInColumnsButton === true ? null : (
+                <ColumnsSelectorItem {...props} />
+            );
         case 'header':
             return <DataTableHeadCell {...props} ref={ref} />;
         case 'data':
