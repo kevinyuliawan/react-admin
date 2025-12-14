@@ -101,3 +101,16 @@ export const LabelTypes = () => (
         </DataTable>
     </Wrapper>
 );
+
+export const HideInColumnsButton = () => (
+    <Wrapper aside={<ColumnsButton />} actions={null}>
+        <DataTable bulkActionButtons={false}>
+            <DataTable.Col
+                source="col0"
+                label="Hidden in Columns Button"
+                hideInColumnsButton={true}
+            />
+            <DataTable.Col source="col1" label="Shown in Columns Button" />
+        </DataTable>
+    </Wrapper>
+);

@@ -1,6 +1,11 @@
 import * as React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { Basic, FewColumns, LabelTypes } from './ColumnsButton.stories';
+import {
+    Basic,
+    FewColumns,
+    LabelTypes,
+    HideInColumnsButton,
+} from './ColumnsButton.stories';
 
 describe('ColumnsButton', () => {
     it('should render one row per column unless they are hidden', async () => {
@@ -55,5 +60,11 @@ describe('ColumnsButton', () => {
                     .querySelectorAll('li:not(.columns-selector-actions)')
             ).toHaveLength(8);
         });
+    });
+    it('should hide a column in the columns button when hideInColumnsButton={true}', async () => {
+        render(<HideInColumnsButton />);
+        fireEvent.click(await screen.findByText('ra.action.select_columns'));
+        await screen.findByLabelText('Shown in Columns Button');
+        expect(screen.queryByLabelText('Hidden in Columns Button')).toBeNull();
     });
 });
