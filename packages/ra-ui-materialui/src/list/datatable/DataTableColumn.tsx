@@ -34,18 +34,19 @@ const DataTableColumnImpl = React.forwardRef<
     HTMLTableCellElement,
     DataTableColumnProps
 >((props, ref) => {
+    const { hideInColumnsButton, ...rest } = props;
     const renderContext = useDataTableRenderContext();
     switch (renderContext) {
         case 'columnsSelector':
-            return props.hideInColumnsButton === true ? null : (
-                <ColumnsSelectorItem {...props} />
+            return hideInColumnsButton === true ? null : (
+                <ColumnsSelectorItem {...rest} />
             );
         case 'header':
-            return <DataTableHeadCell {...props} ref={ref} />;
+            return <DataTableHeadCell {...rest} ref={ref} />;
         case 'data':
-            return <DataTableCell {...props} ref={ref} />;
+            return <DataTableCell {...rest} ref={ref} />;
         case 'footer':
-            return <DataTableCell {...props} ref={ref} />;
+            return <DataTableCell {...rest} ref={ref} />;
     }
 }) as <RecordType extends Record<string, any> = Record<string, any>>(
     props: DataTableColumnProps<RecordType>
